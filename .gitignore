@@ -1,0 +1,14 @@
+# Libraries downloaded by npm (rebuilt with "npm install")
+node_modules/
+
+# Secret settings such as database passwords
+.env
+
+# Build output
+dist/
+build/
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+*.log
