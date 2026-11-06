@@ -32,6 +32,7 @@
 }
 
 .doctor-button {
+  display: inline-block;
   margin-top: 16px;
   padding: 8px 16px;
   background-color: #0f4c81;

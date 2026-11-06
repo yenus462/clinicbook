@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Doctors.css";
 
 // Sample data. In Stage 9 this will come from the backend.
@@ -40,7 +41,9 @@ function Doctors() {
             <h3>{doctor.name}</h3>
             <p className="doctor-specialty">{doctor.specialty}</p>
             <p>{doctor.description}</p>
-            <button className="doctor-button">View Details</button>
+            <Link to={"/doctors/" + doctor.id} className="doctor-button">
+              View Details
+            </Link>
           </div>
         ))}
       </div>
