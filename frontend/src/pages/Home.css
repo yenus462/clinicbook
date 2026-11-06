@@ -1,0 +1,29 @@
+.home {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.home h1 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+}
+
+.home p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #0f4c81;
+  color: #ffffff;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.home-button:hover {
+  background-color: #0c3d68;
+}
