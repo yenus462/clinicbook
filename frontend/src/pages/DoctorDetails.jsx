@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./DoctorDetails.css";
 
@@ -33,12 +34,32 @@ const sampleDoctors = [
   },
 ];
 
-function DoctorDetails() {
-  // Read the number from the address, for example /doctors/2 gives id = "2"
-  const { id } = useParams();
+// Sample 30-minute slots. In Stage 8 the backend will calculate the free ones.
+const sampleSlots = [
+  "09:00",
+  "09:30",
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+];
 
-  // Find the doctor whose id matches. Number(id) turns the text "2" into the number 2
+// Today's date as text like "2026-11-07", used as the earliest allowed date
+function getToday() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function DoctorDetails() {
+  const { id } = useParams();
   const doctor = sampleDoctors.find((d) => d.id === Number(id));
+
+  // State: the chosen date and the chosen time slot
+  const [date, setDate] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState("");
 
   if (!doctor) {
     return (
@@ -48,6 +69,12 @@ function DoctorDetails() {
       </div>
     );
   }
+
+  // When the date changes, clear the chosen slot
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+    setSelectedSlot("");
+  };
 
   return (
     <div className="doctor-details">
@@ -63,8 +90,45 @@ function DoctorDetails() {
       </div>
 
       <div className="doctor-details-card">
-        <h2>Available times</h2>
-        <p>Date and time selection will be added here in a later task.</p>
+        <h2>Book an appointment</h2>
+
+        <label htmlFor="date" className="booking-label">
+          Choose a date
+        </label>
+        <input
+          id="date"
+          type="date"
+          className="booking-date"
+          min={getToday()}
+          value={date}
+          onChange={handleDateChange}
+        />
+
+        {date && (
+          <div>
+            <p className="booking-label">Available times on {date}</p>
+            <div className="slot-grid">
+              {sampleSlots.map((slot) => (
+                <button
+                  key={slot}
+                  type="button"
+                  className={
+                    slot === selectedSlot ? "slot-button slot-selected" : "slot-button"
+                  }
+                  onClick={() => setSelectedSlot(slot)}
+                >
+                  {slot}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {date && selectedSlot && (
+          <p className="booking-summary">
+            You selected {date} at {selectedSlot}.
+          </p>
+        )}
       </div>
     </div>
   );

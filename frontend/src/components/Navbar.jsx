@@ -11,6 +11,8 @@ function Navbar() {
       <div className="navbar-links">
         <Link to="/">Home</Link>
         <Link to="/doctors">Doctors</Link>
+        <Link to="/my-appointments">My Appointments</Link>
+        <Link to="/admin">Admin</Link>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
       </div>

@@ -1,7 +1,9 @@
 .navbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 16px 32px;
   background-color: #0f4c81;
 }
@@ -14,7 +16,8 @@
 
 .navbar-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 8px 24px;
 }
 
 .navbar-links a {
