@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const { apiLimiter } = require("./middleware/rateLimiters");
 const { notFound, errorHandler } = require("./middleware/errorHandler");
+const authRoutes = require("./routes/authRoutes");
 const specialtyRoutes = require("./routes/specialtyRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 
@@ -34,6 +35,7 @@ app.get("/api/health", (req, res) => {
 
 // All /api routes share the general rate limit
 app.use("/api", apiLimiter);
+app.use("/api/auth", authRoutes);
 app.use("/api/specialties", specialtyRoutes);
 app.use("/api/doctors", doctorRoutes);
 
