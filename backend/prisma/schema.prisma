@@ -1,0 +1,91 @@
+// Prisma schema for ClinicBook
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PATIENT
+  ADMIN
+}
+
+enum AppointmentStatus {
+  BOOKED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  passwordHash String
+  phone        String?
+  role         Role          @default(PATIENT)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  appointments Appointment[]
+}
+
+model Specialty {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  doctors Doctor[]
+}
+
+model Doctor {
+  id           Int                  @id @default(autoincrement())
+  name         String
+  description  String
+  photoUrl     String?
+  isActive     Boolean              @default(true)
+  specialtyId  Int
+  specialty    Specialty            @relation(fields: [specialtyId], references: [id], onDelete: Restrict)
+  workingHours DoctorWorkingHours[]
+  appointments Appointment[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+// One row per doctor per weekday. dayOfWeek: 0 = Sunday ... 6 = Saturday.
+// Times are clinic-local text such as "09:00". Slots are always 30 minutes.
+model DoctorWorkingHours {
+  id        Int    @id @default(autoincrement())
+  doctorId  Int
+  doctor    Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  startTime String
+  endTime   String
+
+  @@unique([doctorId, dayOfWeek])
+}
+
+model Appointment {
+  id        Int               @id @default(autoincrement())
+  patientId Int
+  patient   User              @relation(fields: [patientId], references: [id], onDelete: Restrict)
+  doctorId  Int
+  doctor    Doctor            @relation(fields: [doctorId], references: [id], onDelete: Restrict)
+  date      DateTime          @db.Date
+  startTime String
+  endTime   String
+  reason    String
+  status    AppointmentStatus @default(BOOKED)
+
+  // Set to "doctorId_date_startTime" while BOOKED, and to null when the
+  // appointment is cancelled or completed. The unique rule then blocks double
+  // booking, while cancelled slots become free again.
+  slotKey   String?           @unique
+
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@index([doctorId, date])
+  @@index([patientId])
+  @@index([status])
+}
