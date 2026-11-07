@@ -1,18 +1,19 @@
-// Load the Express library
-const express = require("express");
+require("dotenv").config();
+const app = require("./app");
+const prisma = require("./lib/prisma");
 
-// Create the Express application
-const app = express();
+const PORT = process.env.PORT || 5000;
 
-// The port number our server will listen on
-const PORT = 5000;
-
-// A route: when someone visits "/", send back a message
-app.get("/", (req, res) => {
-  res.send("ClinicBook API is running");
-});
-
-// Start the server and wait for requests
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("Server is running on http://localhost:" + PORT);
 });
+
+// Close the database connection cleanly when the server is stopped
+async function shutdown() {
+  server.close();
+  await prisma.$disconnect();
+  process.exit(0);
+}
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
