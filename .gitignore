@@ -8,6 +8,10 @@ node_modules/
 dist/
 build/
 
+# Local Postman files (may contain tokens and test passwords)
+.postman/
+postman/
+
 # Operating system and editor files
 .DS_Store
 Thumbs.db
