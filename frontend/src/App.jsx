@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors";
 import DoctorDetails from "./pages/DoctorDetails";
@@ -20,10 +21,40 @@ function App() {
         <Route path="/doctors/:id" element={<DoctorDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/my-appointments" element={<MyAppointments />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/appointments" element={<AdminAppointments />} />
-        <Route path="/admin/doctors" element={<AdminDoctors />} />
+
+        <Route
+          path="/my-appointments"
+          element={
+            <ProtectedRoute role="PATIENT">
+              <MyAppointments />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/appointments"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminAppointments />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/doctors"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminDoctors />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
