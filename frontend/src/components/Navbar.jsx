@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 import "./Navbar.css";
 
 function Navbar() {
+  const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <nav className="navbar">
       <Link to="/" className="navbar-brand">
@@ -11,10 +20,27 @@ function Navbar() {
       <div className="navbar-links">
         <Link to="/">Home</Link>
         <Link to="/doctors">Doctors</Link>
-        <Link to="/my-appointments">My Appointments</Link>
-        <Link to="/admin">Admin</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+
+        {user && user.role === "PATIENT" && (
+          <Link to="/my-appointments">My Appointments</Link>
+        )}
+        {user && user.role === "ADMIN" && <Link to="/admin">Admin</Link>}
+
+        {!loading && !user && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+
+        {user && (
+          <>
+            <span className="navbar-user">Hi, {user.name}</span>
+            <button type="button" className="navbar-logout" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );

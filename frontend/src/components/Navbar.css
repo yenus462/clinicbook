@@ -17,6 +17,7 @@
 .navbar-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px 24px;
 }
 
@@ -26,4 +27,23 @@
 
 .navbar-links a:hover {
   text-decoration: underline;
+}
+
+.navbar-user {
+  color: #cfe3f7;
+  font-size: 0.95rem;
+}
+
+.navbar-logout {
+  padding: 6px 14px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.navbar-logout:hover {
+  background-color: #ffffff;
+  color: #0f4c81;
 }
