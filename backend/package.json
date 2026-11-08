@@ -9,7 +9,8 @@
     "start": "node server.js",
     "check:auth": "node scripts/testAuth.js",
     "check:admin": "node scripts/testAdmin.js",
-    "check:booking": "node scripts/testBooking.js"
+    "check:booking": "node scripts/testBooking.js",
+    "check:appointments": "node scripts/testAppointments.js"
   },
   "keywords": [],
   "author": "",
