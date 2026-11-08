@@ -1,11 +1,21 @@
 const express = require("express");
-const { createAppointment } = require("../controllers/appointmentController");
+const {
+  createAppointment,
+  listMyAppointments,
+  cancelAppointment,
+  rescheduleAppointment,
+} = require("../controllers/appointmentController");
 const authenticate = require("../middleware/authenticate");
 const requireRole = require("../middleware/requireRole");
 
 const router = express.Router();
 
-// Rule 1: only logged-in patients can book
-router.post("/", authenticate, requireRole("PATIENT"), createAppointment);
+// Everything here is for logged-in patients only (rules 1 and 11)
+router.use(authenticate, requireRole("PATIENT"));
+
+router.post("/", createAppointment);
+router.get("/me", listMyAppointments);
+router.patch("/:id/cancel", cancelAppointment);
+router.patch("/:id/reschedule", rescheduleAppointment);
 
 module.exports = router;
