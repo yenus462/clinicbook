@@ -1,20 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import { getErrorMessage } from "../api/client";
 import "./Form.css";
 
 function Register() {
-  // State: one value for each field
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (event) => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check the rules before "sending" anything
+    // Quick checks for instant feedback. The backend checks everything again.
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
       return;
@@ -25,8 +30,16 @@ function Register() {
     }
 
     setError("");
-    // Never log passwords. We only log the safe fields for now.
-    console.log("Register form submitted:", { name, email, phone });
+    setSubmitting(true);
+
+    try {
+      await register(name, email, phone, password);
+      navigate("/doctors", { replace: true });
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -39,6 +52,7 @@ function Register() {
           id="name"
           type="text"
           placeholder="Your full name"
+          autoComplete="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           required
@@ -49,6 +63,7 @@ function Register() {
           id="email"
           type="email"
           placeholder="you@example.com"
+          autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           required
@@ -59,6 +74,7 @@ function Register() {
           id="phone"
           type="tel"
           placeholder="Your phone number"
+          autoComplete="tel"
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
           required
@@ -69,6 +85,7 @@ function Register() {
           id="password"
           type="password"
           placeholder="At least 8 characters"
+          autoComplete="new-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           required
@@ -79,6 +96,7 @@ function Register() {
           id="confirmPassword"
           type="password"
           placeholder="Repeat your password"
+          autoComplete="new-password"
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
           required
@@ -86,8 +104,8 @@ function Register() {
 
         {error && <p className="form-error">{error}</p>}
 
-        <button type="submit" className="form-button">
-          Register
+        <button type="submit" className="form-button" disabled={submitting}>
+          {submitting ? "Creating account..." : "Register"}
         </button>
 
         <p className="form-footer">

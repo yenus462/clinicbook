@@ -47,10 +47,16 @@
   background-color: #0c3d68;
 }
 
+.form-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
 .form-footer {
   margin-top: 16px;
   text-align: center;
 }
+
 .form-error {
   margin-top: 12px;
   color: #b91c1c;

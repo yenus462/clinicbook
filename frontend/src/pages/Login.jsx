@@ -1,16 +1,36 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import { getErrorMessage } from "../api/client";
 import "./Form.css";
 
 function Login() {
-  // State: React remembers what the user types
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  // Runs when the user clicks the Login button
-  const handleSubmit = (event) => {
-    event.preventDefault(); // stop the browser from reloading the page
-    console.log("Login form submitted:", { email, password });
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // If the user was sent here from a protected page, we return them there afterwards
+  const from = location.state && location.state.from && location.state.from.pathname;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    setSubmitting(true);
+
+    try {
+      const user = await login(email, password);
+      const destination = from || (user.role === "ADMIN" ? "/admin" : "/doctors");
+      navigate(destination, { replace: true });
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -23,6 +43,7 @@ function Login() {
           id="email"
           type="email"
           placeholder="you@example.com"
+          autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           required
@@ -33,13 +54,16 @@ function Login() {
           id="password"
           type="password"
           placeholder="Your password"
+          autoComplete="current-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           required
         />
 
-        <button type="submit" className="form-button">
-          Login
+        {error && <p className="form-error">{error}</p>}
+
+        <button type="submit" className="form-button" disabled={submitting}>
+          {submitting ? "Logging in..." : "Login"}
         </button>
 
         <p className="form-footer">
