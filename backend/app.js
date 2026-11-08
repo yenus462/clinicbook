@@ -13,6 +13,8 @@ const doctorRoutes = require("./routes/doctorRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
 const adminSpecialtyRoutes = require("./routes/adminSpecialtyRoutes");
 const adminDoctorRoutes = require("./routes/adminDoctorRoutes");
+const adminAppointmentRoutes = require("./routes/adminAppointmentRoutes");
+const adminStatsRoutes = require("./routes/adminStatsRoutes");
 
 const app = express();
 
@@ -46,13 +48,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/specialties", specialtyRoutes);
 app.use("/api/doctors", doctorRoutes);
 
-// Patient routes (each route adds its own authenticate and role check)
+// Patient routes (the router itself requires login and the PATIENT role)
 app.use("/api/appointments", appointmentRoutes);
 
 // Admin routes: one guard protects everything under /api/admin
 app.use("/api/admin", authenticate, requireRole("ADMIN"));
 app.use("/api/admin/specialties", adminSpecialtyRoutes);
 app.use("/api/admin/doctors", adminDoctorRoutes);
+app.use("/api/admin/appointments", adminAppointmentRoutes);
+app.use("/api/admin/stats", adminStatsRoutes);
 
 // These two must stay last
 app.use(notFound);
