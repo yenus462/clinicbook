@@ -10,6 +10,7 @@ const requireRole = require("./middleware/requireRole");
 const authRoutes = require("./routes/authRoutes");
 const specialtyRoutes = require("./routes/specialtyRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const adminSpecialtyRoutes = require("./routes/adminSpecialtyRoutes");
 const adminDoctorRoutes = require("./routes/adminDoctorRoutes");
 
@@ -44,6 +45,9 @@ app.use("/api", apiLimiter);
 app.use("/api/auth", authRoutes);
 app.use("/api/specialties", specialtyRoutes);
 app.use("/api/doctors", doctorRoutes);
+
+// Patient routes (each route adds its own authenticate and role check)
+app.use("/api/appointments", appointmentRoutes);
 
 // Admin routes: one guard protects everything under /api/admin
 app.use("/api/admin", authenticate, requireRole("ADMIN"));
