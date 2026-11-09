@@ -1,43 +1,57 @@
 .booking-label {
   display: block;
-  margin-top: 16px;
+  margin-top: 18px;
   margin-bottom: 8px;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--navy);
 }
 
 .booking-date {
-  padding: 10px;
+  padding: 11px 14px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 1rem;
+  background-color: #ffffff;
 }
 
 .booking-reason {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
   resize: vertical;
 }
 
+.booking-date:focus,
+.booking-reason:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.15);
+}
+
 .booking-button {
-  margin-top: 16px;
-  padding: 12px 24px;
-  background-color: #0f4c81;
+  margin-top: 18px;
+  padding: 13px 28px;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(15, 76, 129, 0.28);
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .booking-button:hover {
-  background-color: #0c3d68;
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .booking-button:disabled {
   background-color: #94a3b8;
+  box-shadow: none;
   cursor: not-allowed;
+  transform: none;
 }
