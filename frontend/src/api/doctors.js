@@ -10,6 +10,12 @@ export async function fetchDoctor(id) {
   return response.data.doctor;
 }
 
+// Returns [{ id, name }, ...]
+export async function fetchSpecialties() {
+  const response = await api.get("/specialties");
+  return response.data.specialties;
+}
+
 // Returns { doctorId, date, isWorkingDay, slots: ["09:00", ...] }
 export async function fetchSlots(doctorId, date) {
   const response = await api.get("/doctors/" + doctorId + "/slots", { params: { date } });

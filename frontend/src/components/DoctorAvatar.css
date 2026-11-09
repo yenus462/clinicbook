@@ -1,0 +1,38 @@
+.avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  object-fit: cover;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.avatar-md {
+  width: 56px;
+  height: 56px;
+  font-size: 1.15rem;
+}
+
+.avatar-lg {
+  width: 88px;
+  height: 88px;
+  font-size: 1.8rem;
+}
+
+.avatar-tone-0 {
+  background: linear-gradient(135deg, #0f4c81, #3b82c4);
+}
+
+.avatar-tone-1 {
+  background: linear-gradient(135deg, #0e7490, #22b8cf);
+}
+
+.avatar-tone-2 {
+  background: linear-gradient(135deg, #1e3a8a, #4f7cde);
+}
+
+.avatar-tone-3 {
+  background: linear-gradient(135deg, #0f766e, #2dd4bf);
+}

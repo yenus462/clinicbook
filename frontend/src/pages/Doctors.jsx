@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import { fetchDoctors } from "../api/doctors";
-import { formatWorkingHours } from "../lib/format";
 import PageState from "../components/PageState";
+import DoctorCard from "../components/DoctorCard";
+import Icon from "../components/Icons";
 import "./Doctors.css";
 
 function Doctors() {
   const { data: doctors, loading, error, reload } = useFetch(fetchDoctors);
-  const [specialtyId, setSpecialtyId] = useState("");
+
+  // The Home page links here with ?specialty=<id>
+  const [searchParams] = useSearchParams();
+  const [specialtyId, setSpecialtyId] = useState(searchParams.get("specialty") || "");
   const [search, setSearch] = useState("");
 
   // The specialty choices come from the doctors themselves
@@ -32,54 +36,63 @@ function Doctors() {
     : [];
 
   return (
-    <div className="doctors">
-      <h1>Our Doctors</h1>
-      <p className="doctors-subtitle">Choose a doctor to see their available times.</p>
+    <div>
+      <section className="doctors-hero">
+        <div className="doctors-hero-inner">
+          <h1>Find your doctor</h1>
+          <p>Browse our specialists and book a free time in a few clicks.</p>
 
-      {doctors && (
-        <div className="doctors-filters">
-          <input
-            type="text"
-            className="doctors-search"
-            placeholder="Search by name"
-            aria-label="Search doctors by name"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
-          <select
-            className="doctors-select"
-            aria-label="Filter by specialty"
-            value={specialtyId}
-            onChange={(event) => setSpecialtyId(event.target.value)}
-          >
-            <option value="">All specialties</option>
-            {specialties.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.name}
-              </option>
-            ))}
-          </select>
+          {doctors && (
+            <div className="doctors-filters">
+              <div className="doctors-search-box">
+                <Icon name="search" size={18} />
+                <input
+                  type="text"
+                  className="doctors-search"
+                  placeholder="Search by doctor name"
+                  aria-label="Search doctors by name"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                />
+              </div>
+              <select
+                className="doctors-select"
+                aria-label="Filter by specialty"
+                value={specialtyId}
+                onChange={(event) => setSpecialtyId(event.target.value)}
+              >
+                <option value="">All specialties</option>
+                {specialties.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
-      )}
+      </section>
 
-      <PageState loading={loading} error={error} onRetry={reload} />
+      <div className="doctors">
+        <PageState loading={loading} error={error} onRetry={reload} />
 
-      {doctors && visible.length === 0 && (
-        <p>No doctors match your search. Try another name or specialty.</p>
-      )}
+        {doctors && (
+          <p className="doctors-count">
+            {visible.length} {visible.length === 1 ? "doctor" : "doctors"} available
+          </p>
+        )}
 
-      <div className="doctors-grid">
-        {visible.map((doctor) => (
-          <div className="doctor-card" key={doctor.id}>
-            <h3>{doctor.name}</h3>
-            <p className="doctor-specialty">{doctor.specialty.name}</p>
-            <p>{doctor.description}</p>
-            <p className="doctor-hours">{formatWorkingHours(doctor.workingHours)}</p>
-            <Link to={"/doctors/" + doctor.id} className="doctor-button">
-              View Details
-            </Link>
-          </div>
-        ))}
+        {doctors && visible.length === 0 && (
+          <p className="doctors-empty">
+            No doctors match your search. Try another name or specialty.
+          </p>
+        )}
+
+        <div className="doctors-grid">
+          {visible.map((doctor) => (
+            <DoctorCard key={doctor.id} doctor={doctor} />
+          ))}
+        </div>
       </div>
     </div>
   );
