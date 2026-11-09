@@ -1,18 +1,27 @@
 .not-found {
-  max-width: 500px;
+  max-width: 520px;
   margin: 80px auto;
-  padding: 0 24px;
+  padding: 40px 24px;
   text-align: center;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .not-found-code {
-  font-size: 4rem;
-  font-weight: bold;
-  color: var(--color-primary);
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
 }
 
 .not-found h1 {
   margin-bottom: 8px;
+}
+
+.not-found p {
+  color: var(--muted);
 }
 
 .not-found-actions {
@@ -27,12 +36,16 @@
 .not-found-button {
   display: inline-block;
   padding: 12px 28px;
-  background-color: var(--color-primary);
+  background-color: var(--primary);
   color: #ffffff;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 .not-found-button:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--primary-dark);
+}
+
+.not-found-link {
+  font-weight: 700;
 }
