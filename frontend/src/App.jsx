@@ -10,6 +10,7 @@ import MyAppointments from "./pages/MyAppointments";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAppointments from "./pages/admin/AdminAppointments";
 import AdminDoctors from "./pages/admin/AdminDoctors";
+import AdminSpecialties from "./pages/admin/AdminSpecialties";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
           element={
             <ProtectedRoute role="ADMIN">
               <AdminDoctors />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/specialties"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminSpecialties />
             </ProtectedRoute>
           }
         />
