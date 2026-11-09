@@ -10,7 +10,9 @@
     "check:auth": "node scripts/testAuth.js",
     "check:admin": "node scripts/testAdmin.js",
     "check:booking": "node scripts/testBooking.js",
-    "check:appointments": "node scripts/testAppointments.js"
+    "check:appointments": "node scripts/testAppointments.js",
+    "check:security": "node scripts/testSecurity.js",
+    "check:all": "node scripts/runAllChecks.js"
   },
   "keywords": [],
   "author": "",
