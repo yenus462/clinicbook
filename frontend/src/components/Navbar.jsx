@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import Logo from "./Logo";
 import "./Navbar.css";
 
 // NavLink adds the class "active" to the link of the current page
@@ -19,10 +20,12 @@ function Navbar() {
     navigate("/");
   };
 
+  const isAdmin = user && user.role === "ADMIN";
+
   return (
     <nav className="navbar" aria-label="Main">
-      <Link to="/" className="navbar-brand" onClick={closeMenu}>
-        ClinicBook
+      <Link to="/" className="navbar-brand" onClick={closeMenu} aria-label="ClinicBook home">
+        <Logo />
       </Link>
 
       <button
@@ -48,7 +51,7 @@ function Navbar() {
             My Appointments
           </NavLink>
         )}
-        {user && user.role === "ADMIN" && (
+        {isAdmin && (
           <NavLink to="/admin" className={linkClass} onClick={closeMenu}>
             Admin
           </NavLink>
@@ -67,13 +70,23 @@ function Navbar() {
 
         {user && (
           <>
-            <NavLink to="/profile" className={linkClass} onClick={closeMenu}>
-              Hi, {user.name}
+            <NavLink
+              to="/profile"
+              className={({ isActive }) => "navbar-user" + (isActive ? " active" : "")}
+              onClick={closeMenu}
+            >
+              {user.name}
             </NavLink>
             <button type="button" className="navbar-logout" onClick={handleLogout}>
               Logout
             </button>
           </>
+        )}
+
+        {!isAdmin && (
+          <Link to="/doctors" className="navbar-cta" onClick={closeMenu}>
+            Book Appointment
+          </Link>
         )}
       </div>
     </nav>
