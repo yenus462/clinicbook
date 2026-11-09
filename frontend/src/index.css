@@ -1,3 +1,16 @@
+/* Colours and sizes used by newer files. Older files keep their own values. */
+:root {
+  --color-primary: #0f4c81;
+  --color-primary-dark: #0c3d68;
+  --color-primary-light: #e6f0fa;
+  --color-bg: #f4f7fb;
+  --color-text: #1f2937;
+  --color-muted: #475569;
+  --color-danger: #b91c1c;
+  --radius: 8px;
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
 /* Reset: remove default browser spacing and use predictable sizing */
 * {
   margin: 0;
@@ -8,25 +21,97 @@
 /* Base look for the whole app */
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f4f7fb;
-  color: #1f2937;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   line-height: 1.5;
 }
 
-/* Basic heading and link styles */
 h1,
 h2,
 h3 {
-  color: #0f4c81;
+  color: var(--color-primary);
 }
 
 a {
-  color: #0f4c81;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
-/* Basic button style we will reuse */
 button {
   cursor: pointer;
   font-size: 1rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Keyboard users must always see where they are */
+:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* "Skip to content" link: hidden until a keyboard user tabs to it */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  color: var(--color-primary);
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Footer stays at the bottom even on short pages */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+}
+
+/* Disabled form fields should still be readable */
+input:disabled {
+  background-color: #f1f5f9;
+  color: var(--color-muted);
+}
+
+/* Smaller screens: less empty space around the content */
+@media (max-width: 600px) {
+  .app-main .page-container,
+  .app-main .doctors,
+  .app-main .doctor-details {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .app-main .form-page {
+    padding: 24px 16px;
+  }
+
+  .app-main .form-card,
+  .app-main .doctor-form {
+    padding: 20px;
+  }
+}
+
+/* Respect people who turn animations off in their system settings */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
