@@ -1,0 +1,43 @@
+.booking-label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.booking-date {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.booking-reason {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.booking-button {
+  margin-top: 16px;
+  padding: 12px 24px;
+  background-color: #0f4c81;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.booking-button:hover {
+  background-color: #0c3d68;
+}
+
+.booking-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}

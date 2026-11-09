@@ -1,0 +1,29 @@
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.slot-button {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #0f4c81;
+  border: 1px solid #0f4c81;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.slot-button:hover {
+  background-color: #e6f0fa;
+}
+
+.slot-selected,
+.slot-selected:hover {
+  background-color: #0f4c81;
+  color: #ffffff;
+}
+
+.slot-message {
+  margin-top: 12px;
+}
