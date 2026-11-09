@@ -9,6 +9,11 @@
   margin-bottom: 20px;
 }
 
+.back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
 /* The wrapper lets wide tables scroll sideways on small screens */
 .table-wrapper {
   background-color: #ffffff;
@@ -27,6 +32,7 @@
 .data-table td {
   padding: 12px 16px;
   text-align: left;
+  vertical-align: top;
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -35,9 +41,21 @@
   color: #0f4c81;
 }
 
+.cell-sub {
+  display: block;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
 .empty-message {
   padding: 24px;
   text-align: center;
+}
+
+.action-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .small-button {
@@ -60,4 +78,101 @@
 
 .small-button-blue:hover {
   background-color: #e6f0fa;
+}
+
+.small-button:disabled {
+  color: #94a3b8;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+  cursor: not-allowed;
+}
+
+/* Status tabs */
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  color: #0f4c81;
+  border: 1px solid #0f4c81;
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+.tab-active {
+  background-color: #0f4c81;
+  color: #ffffff;
+}
+
+/* Inputs used on table pages */
+.admin-select,
+.admin-input {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #ffffff;
+}
+
+/* A white card used for side panels such as "Reschedule" */
+.panel {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary-button {
+  padding: 9px 20px;
+  background-color: #0f4c81;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.primary-button:hover {
+  background-color: #0c3d68;
+}
+
+.primary-button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  padding: 9px 20px;
+  background-color: #ffffff;
+  color: #0f4c81;
+  border: 1px solid #0f4c81;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.secondary-button:hover {
+  background-color: #e6f0fa;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
 }
