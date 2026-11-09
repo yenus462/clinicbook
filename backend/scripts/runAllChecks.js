@@ -7,6 +7,7 @@ const path = require("path");
 
 const scripts = [
   "testAuth.js",
+  "testProfile.js",
   "testAdmin.js",
   "testBooking.js",
   "testAppointments.js",

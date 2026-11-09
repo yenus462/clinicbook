@@ -12,7 +12,8 @@
     "check:booking": "node scripts/testBooking.js",
     "check:appointments": "node scripts/testAppointments.js",
     "check:security": "node scripts/testSecurity.js",
-    "check:all": "node scripts/runAllChecks.js"
+    "check:all": "node scripts/runAllChecks.js",
+    "check:profile": "node scripts/testProfile.js"
   },
   "keywords": [],
   "author": "",
