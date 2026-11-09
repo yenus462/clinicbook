@@ -45,7 +45,8 @@ function Register() {
   return (
     <div className="form-page">
       <form className="form-card" onSubmit={handleSubmit}>
-        <h2>Create an account</h2>
+        <h2>Create your account</h2>
+        <p className="form-intro">Book and manage your appointments online.</p>
 
         <label htmlFor="name">Full name</label>
         <input
@@ -75,6 +76,7 @@ function Register() {
           type="tel"
           placeholder="Your phone number"
           autoComplete="tel"
+          maxLength="15"
           value={phone}
           onChange={(event) => setPhone(event.target.value)}
           required
@@ -105,11 +107,15 @@ function Register() {
         {error && <p className="form-error">{error}</p>}
 
         <button type="submit" className="form-button" disabled={submitting}>
-          {submitting ? "Creating account..." : "Register"}
+          {submitting ? "Creating account..." : "Create account"}
         </button>
 
         <p className="form-footer">
           Already have an account? <Link to="/login">Login</Link>
+        </p>
+
+        <p className="form-note">
+          This is a demonstration environment. Please do not enter sensitive medical details.
         </p>
       </form>
     </div>
