@@ -3,7 +3,11 @@ const prisma = require("../lib/prisma");
 const AppError = require("../lib/AppError");
 const { signToken } = require("../lib/token");
 const { publicUserSelect, toPublicUser } = require("../lib/userFields");
-const { validateRegister, validateLogin } = require("../lib/validators");
+const {
+  validateRegister,
+  validateLogin,
+  validateProfile,
+} = require("../lib/validators");
 
 const SALT_ROUNDS = 10;
 
@@ -67,4 +71,21 @@ async function me(req, res) {
   res.json({ user: req.user });
 }
 
-module.exports = { register, login, me };
+// PATCH /api/auth/me  (after authenticate)   body: { name, phone }
+// Only name and phone can change. Email and role are never taken from the request.
+async function updateMe(req, res) {
+  const { errors, values } = validateProfile(req.body || {});
+  if (errors.length > 0) {
+    throw new AppError(errors.join(" "), 400);
+  }
+
+  const user = await prisma.user.update({
+    where: { id: req.user.id },
+    data: { name: values.name, phone: values.phone },
+    select: publicUserSelect,
+  });
+
+  res.json({ user });
+}
+
+module.exports = { register, login, me, updateMe };

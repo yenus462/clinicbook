@@ -9,6 +9,18 @@ function cleanText(value) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function checkName(name, errors) {
+  if (name.length < 2 || name.length > 100) {
+    errors.push("Name must be between 2 and 100 characters.");
+  }
+}
+
+function checkPhone(phone, errors) {
+  if (!PHONE_REGEX.test(phone)) {
+    errors.push("Phone must be 7 to 15 digits (you may use + - and spaces).");
+  }
+}
+
 // Returns { errors: [...], values: {...cleaned...} }
 function validateRegister(body) {
   const errors = [];
@@ -18,15 +30,11 @@ function validateRegister(body) {
   const phone = cleanText(body.phone);
   const password = typeof body.password === "string" ? body.password : "";
 
-  if (name.length < 2 || name.length > 100) {
-    errors.push("Name must be between 2 and 100 characters.");
-  }
+  checkName(name, errors);
   if (!EMAIL_REGEX.test(email) || email.length > 254) {
     errors.push("Please enter a valid email address.");
   }
-  if (!PHONE_REGEX.test(phone)) {
-    errors.push("Phone must be 7 to 15 digits (you may use + - and spaces).");
-  }
+  checkPhone(phone, errors);
   if (password.length < PASSWORD_MIN) {
     errors.push("Password must be at least 8 characters.");
   } else if (password.length > PASSWORD_MAX) {
@@ -49,4 +57,17 @@ function validateLogin(body) {
   return { errors, values: { email, password } };
 }
 
-module.exports = { validateRegister, validateLogin };
+// Profile updates: only name and phone. Anything else in the body is ignored.
+function validateProfile(body) {
+  const errors = [];
+
+  const name = cleanText(body.name);
+  const phone = cleanText(body.phone);
+
+  checkName(name, errors);
+  checkPhone(phone, errors);
+
+  return { errors, values: { name, phone } };
+}
+
+module.exports = { validateRegister, validateLogin, validateProfile };
