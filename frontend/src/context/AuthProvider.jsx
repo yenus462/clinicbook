@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { AuthContext } from "./authContext";
-import { loginRequest, registerRequest, meRequest } from "../api/auth";
+import {
+  loginRequest,
+  registerRequest,
+  meRequest,
+  updateProfileRequest,
+} from "../api/auth";
 import { getToken, setToken, clearToken, setUnauthorizedHandler } from "../api/client";
 
 export function AuthProvider({ children }) {
@@ -52,14 +57,20 @@ export function AuthProvider({ children }) {
     return data.user;
   }, []);
 
+  const updateProfile = useCallback(async (name, phone) => {
+    const data = await updateProfileRequest(name, phone);
+    setUser(data.user);
+    return data.user;
+  }, []);
+
   const logout = useCallback(() => {
     clearToken();
     setUser(null);
   }, []);
 
   const value = useMemo(
-    () => ({ user, loading, login, register, logout }),
-    [user, loading, login, register, logout]
+    () => ({ user, loading, login, register, updateProfile, logout }),
+    [user, loading, login, register, updateProfile, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
