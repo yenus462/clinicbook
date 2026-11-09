@@ -1,40 +1,62 @@
 .page-state {
   padding: 40px 24px;
   text-align: center;
+  color: var(--muted);
+}
+
+/* A small spinner next to "Loading..." */
+.page-state:not(.page-state-error)::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 12px;
+  border: 3px solid var(--sky);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .page-state-error {
-  color: #b91c1c;
-  font-weight: bold;
+  color: var(--danger);
+  font-weight: 600;
 }
 
 .retry-button {
   margin-top: 12px;
-  padding: 8px 18px;
-  background-color: #0f4c81;
+  padding: 9px 22px;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 999px;
+  font-weight: 700;
 }
 
 .retry-button:hover {
-  background-color: #0c3d68;
+  background-color: var(--primary-dark);
 }
 
 .alert {
   margin: 16px 0;
   padding: 12px 16px;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .alert-error {
   background-color: #fee2e2;
   color: #991b1b;
+  border: 1px solid #fecaca;
 }
 
 .alert-success {
   background-color: #dcfce7;
   color: #166534;
+  border: 1px solid #bbf7d0;
 }

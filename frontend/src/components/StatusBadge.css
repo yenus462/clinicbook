@@ -1,9 +1,19 @@
 .badge {
-  display: inline-block;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
   border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
 }
 
 .badge-booked {
