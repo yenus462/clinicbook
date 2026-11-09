@@ -1,41 +1,75 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import "./Navbar.css";
+
+// NavLink adds the class "active" to the link of the current page
+const linkClass = ({ isActive }) => (isActive ? "active" : undefined);
 
 function Navbar() {
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const closeMenu = () => setOpen(false);
 
   const handleLogout = () => {
+    closeMenu();
     logout();
     navigate("/");
   };
 
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-brand">
+    <nav className="navbar" aria-label="Main">
+      <Link to="/" className="navbar-brand" onClick={closeMenu}>
         ClinicBook
       </Link>
 
-      <div className="navbar-links">
-        <Link to="/">Home</Link>
-        <Link to="/doctors">Doctors</Link>
+      <button
+        type="button"
+        className="navbar-toggle"
+        aria-expanded={open}
+        aria-controls="nav-links"
+        onClick={() => setOpen(!open)}
+      >
+        {open ? "Close" : "Menu"}
+      </button>
+
+      <div id="nav-links" className={open ? "navbar-links open" : "navbar-links"}>
+        <NavLink to="/" end className={linkClass} onClick={closeMenu}>
+          Home
+        </NavLink>
+        <NavLink to="/doctors" className={linkClass} onClick={closeMenu}>
+          Doctors
+        </NavLink>
 
         {user && user.role === "PATIENT" && (
-          <Link to="/my-appointments">My Appointments</Link>
+          <NavLink to="/my-appointments" className={linkClass} onClick={closeMenu}>
+            My Appointments
+          </NavLink>
         )}
-        {user && user.role === "ADMIN" && <Link to="/admin">Admin</Link>}
+        {user && user.role === "ADMIN" && (
+          <NavLink to="/admin" className={linkClass} onClick={closeMenu}>
+            Admin
+          </NavLink>
+        )}
 
         {!loading && !user && (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <NavLink to="/login" className={linkClass} onClick={closeMenu}>
+              Login
+            </NavLink>
+            <NavLink to="/register" className={linkClass} onClick={closeMenu}>
+              Register
+            </NavLink>
           </>
         )}
 
         {user && (
           <>
-            <span className="navbar-user">Hi, {user.name}</span>
+            <NavLink to="/profile" className={linkClass} onClick={closeMenu}>
+              Hi, {user.name}
+            </NavLink>
             <button type="button" className="navbar-logout" onClick={handleLogout}>
               Logout
             </button>
