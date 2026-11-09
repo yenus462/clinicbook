@@ -1,0 +1,40 @@
+.page-state {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.page-state-error {
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+.retry-button {
+  margin-top: 12px;
+  padding: 8px 18px;
+  background-color: #0f4c81;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.retry-button:hover {
+  background-color: #0c3d68;
+}
+
+.alert {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.alert-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.alert-success {
+  background-color: #dcfce7;
+  color: #166534;
+}
