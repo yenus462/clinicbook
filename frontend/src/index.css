@@ -1,40 +1,66 @@
-/* Colours and sizes used by newer files. Older files keep their own values. */
+/* ---------- Design tokens ---------- */
 :root {
-  --color-primary: #0f4c81;
-  --color-primary-dark: #0c3d68;
-  --color-primary-light: #e6f0fa;
-  --color-bg: #f4f7fb;
-  --color-text: #1f2937;
-  --color-muted: #475569;
-  --color-danger: #b91c1c;
-  --radius: 8px;
-  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --navy: #0a2540;
+  --primary: #0f4c81;
+  --primary-dark: #0b3a63;
+  --primary-light: #e8f2fc;
+  --sky: #d6e9fa;
+  --accent: #0e9f9a;
+  --bg: #f5f8fc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: #e2e8f0;
+  --danger: #b91c1c;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 1px 3px rgba(10, 37, 64, 0.08);
+  --shadow: 0 6px 20px rgba(10, 37, 64, 0.08);
+  --shadow-lg: 0 18px 40px rgba(10, 37, 64, 0.14);
+
+  /* Older names, kept so every file keeps working */
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-bg: var(--bg);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-danger: var(--danger);
 }
 
-/* Reset: remove default browser spacing and use predictable sizing */
+/* ---------- Reset and base ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Base look for the whole app */
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.5;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3 {
-  color: var(--color-primary);
+  color: var(--navy);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--primary);
   text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 button {
@@ -52,24 +78,7 @@ img {
   outline-offset: 2px;
 }
 
-/* "Skip to content" link: hidden until a keyboard user tabs to it */
-.skip-link {
-  position: absolute;
-  left: 8px;
-  top: -60px;
-  z-index: 100;
-  padding: 10px 16px;
-  background-color: #ffffff;
-  color: var(--color-primary);
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-.skip-link:focus {
-  top: 8px;
-}
-
-/* Footer stays at the bottom even on short pages */
+/* ---------- Layout shell ---------- */
 .app-shell {
   min-height: 100vh;
   display: flex;
@@ -80,19 +89,96 @@ img {
   flex: 1;
 }
 
-/* Disabled form fields should still be readable */
-input:disabled {
-  background-color: #f1f5f9;
-  color: var(--color-muted);
+/* "Skip to content" link: hidden until a keyboard user tabs to it */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 200;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  color: var(--primary);
+  border-radius: 6px;
+  font-weight: bold;
 }
 
-/* Smaller screens: less empty space around the content */
+.skip-link:focus {
+  top: 8px;
+}
+
+/* ---------- Shared buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(15, 76, 129, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-light {
+  background-color: #ffffff;
+  color: var(--navy);
+}
+
+.btn-light:hover {
+  background-color: var(--primary-light);
+}
+
+/* Entrance animation */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.6s ease both;
+}
+
+input:disabled {
+  background-color: #f1f5f9;
+  color: var(--muted);
+}
+
+/* ---------- Small screens ---------- */
 @media (max-width: 600px) {
   .app-main .page-container,
   .app-main .doctors,
   .app-main .doctor-details {
-    margin-top: 24px;
-    margin-bottom: 24px;
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -100,14 +186,9 @@ input:disabled {
   .app-main .form-page {
     padding: 24px 16px;
   }
-
-  .app-main .form-card,
-  .app-main .doctor-form {
-    padding: 20px;
-  }
 }
 
-/* Respect people who turn animations off in their system settings */
+/* People who turn animations off in their system settings */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
