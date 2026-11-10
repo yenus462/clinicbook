@@ -18,20 +18,22 @@ const adminStatsRoutes = require("./routes/adminStatsRoutes");
 
 const app = express();
 
+// The host (Render) puts one proxy in front of this server. Trusting it lets the
+// rate limiter see each visitor's real address instead of the proxy's address.
+app.set("trust proxy", 1);
+
 // Security headers
 app.use(helmet());
 
-// Only our frontend may call this API from a browser
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
-  })
-);
+// Only our frontend may call this API from a browser.
+// A trailing slash is removed, because browsers send the origin without one.
+const frontendUrl = (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/+$/, "");
+app.use(cors({ origin: frontendUrl }));
 
 // Read JSON bodies, but refuse very large ones
 app.use(express.json({ limit: "10kb" }));
 
-// Home and health check
+// Home and health check (used by the host to see that the server is alive)
 app.get("/", (req, res) => {
   res.send("ClinicBook API is running");
 });
