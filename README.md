@@ -2,7 +2,7 @@
 
 A full-stack clinic appointment booking system. Patients browse doctors, see real free time slots and book, reschedule or cancel online. Administrators manage doctors, working hours, specialties and appointments.
 
-**Live demo:**//clinicbook-nu.vercel.app/
+**Live demo:**https://clinicbook-nu.vercel.app/
 **API health check:** https://clinicbook-api-b5tu.onrender.com
 
 > The demo backend runs on a free plan, so the first request after a quiet period can take a little while.
