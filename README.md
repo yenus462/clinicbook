@@ -154,4 +154,3 @@ With the backend running, `npm run check:all` in `backend` runs automatic API ch
 - Doctors do not have their own login. Administrators manage doctor profiles.
 - No online payments, SMS, or medical records. This is a demonstration project.
 
-## License
